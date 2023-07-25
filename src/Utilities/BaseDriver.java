@@ -26,8 +26,9 @@ public class BaseDriver {
 
         driver.manage().window().maximize();
 
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        Duration duration = Duration.ofSeconds(15);
+        driver.manage().timeouts().pageLoadTimeout(duration);
+        driver.manage().timeouts().implicitlyWait(duration);
     }
 
     public static void waitAndQuit(){
