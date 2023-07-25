@@ -17,4 +17,4 @@ The BaseDriver class serves as the foundation for our test automation. It sets u
 In next projects we will start using these utilities to test web applications.
 
 ## Demo
-<img align="right" alt="Coding" width="400" src="https://github.com/TunahanBoyaci/Utilities/blob/main/24.07.2023_18.32.56_REC.mp4">
+<img src="https://github.com/TunahanBoyaci/Utilities/blob/main/24.07.2023_18.32.56_REC.gif">
