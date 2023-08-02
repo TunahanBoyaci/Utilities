@@ -1,5 +1,9 @@
 package Utilities;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
 import java.util.Random;
 
 public class MyMethods {
@@ -63,5 +67,11 @@ public class MyMethods {
         }
         String randomString = sb.toString();
         return randomString;
+    }
+
+    public static void successMessageValidation(){
+//        WebElement successMessage = BaseDriver.driver.findElement(By.cssSelector("div[class='alert alert-success alert-dismissible']"));
+//        Assert.assertTrue(successMessage.isDisplayed());
+//        Assert.assertTrue(successMessage.getText().contains("successfully updated"));
     }
 }

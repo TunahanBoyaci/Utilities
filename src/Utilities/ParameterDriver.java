@@ -3,8 +3,9 @@ package Utilities;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,16 +15,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BaseDriver {
-    public static WebDriver driver;
+public class ParameterDriver {
+    public WebDriver driver;
 
-    @BeforeClass
-    public void createDriver(){
+    @BeforeClass(alwaysRun = true)
+    @Parameters("browser")
+    public void createParameterDriver(String browserName) {
         closePreviousDrivers();
+
         Logger logger = Logger.getLogger("");
         logger.setLevel(Level.SEVERE);
 
-        driver = new ChromeDriver();
+        if (browserName.equalsIgnoreCase("chrome")) {
+            driver = new ChromeDriver();
+        } else if (browserName.equalsIgnoreCase("firefox")) {
+            driver = new FirefoxDriver();
+        } else if (browserName.equalsIgnoreCase("edge")) {
+            driver = new EdgeDriver();
+        }
 
         driver.manage().window().maximize();
 
@@ -32,17 +41,16 @@ public class BaseDriver {
         driver.manage().timeouts().implicitlyWait(duration);
     }
 
-    @AfterClass (alwaysRun = true)
-    public void quitDriver(){
+    @AfterClass
+    public void waitAndQuit() {
         MyMethods.myWait(4);
         driver.quit();
     }
 
-    public void closePreviousDrivers(){
+    public void closePreviousDrivers() {
         try {
             Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -55,7 +63,7 @@ public class BaseDriver {
         FileUtils.copyFile(srcFile, new File("screenShots/screenShot" + localDateTime.format(dateTimeFormatter) + ".png"));
     }
 
-    public void login(){
+    public void login() {
 //        driver.get("https://opencart.abstracta.us/index.php?route=account/login");
 //
 //        WebElement emailInbox = driver.findElement(By.cssSelector("input[id='input-email']"));
@@ -69,7 +77,7 @@ public class BaseDriver {
     }
 
 
-    public void login(String username, String password){
+    public void login(String username, String password) {
 //        driver.get("https://opencart.abstracta.us/index.php?route=account/login");
 //
 //        WebElement emailInbox = driver.findElement(By.cssSelector("input[id='input-email']"));
